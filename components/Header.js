@@ -10,12 +10,15 @@ import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
 import { DateRangePicker } from 'react-date-range';
 import { useState } from 'react';
+import { useRouter } from 'next/dist/client/router';
 
 function Header() {
   const [searchInput, setSearchInput] = useState('');
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [numOfGuests, setNumOfGuests] = useState(1);
+  // Custom useRouter hook from Next is RAD
+  const router = useRouter();
 
   const selectionRange = {
     startDate,
@@ -32,9 +35,24 @@ function Header() {
     setSearchInput('');
   };
 
+  const search = () => {
+    router.push({
+      pathname: '/search',
+      query: {
+        location: searchInput,
+        startDate: startDate.toISOString(),
+        endDate: endDate.toISOString(),
+        numOfGuests,
+      },
+    });
+  };
+
   return (
     <header className="sticky top-0 z-50 grid grid-cols-3 bg-white shadow-md p-5 md:px-10">
-      <div className="relative flex items-center h-10 cursor-pointer my-auto">
+      <div
+        onClick={() => router.push('/')}
+        className="relative flex items-center h-10 cursor-pointer my-auto"
+      >
         <Image
           src="https://links.papareact.com/qd3"
           layout="fill"
@@ -85,12 +103,15 @@ function Header() {
               placeholder="1"
             />
           </div>
+
           <div className="flex">
             <button className="flex-grow text-red-400" onClick={resetInput}>
               Cancel
             </button>
 
-            <button className="flex-grow text-gray-500">Search</button>
+            <button onClick={search} className="flex-grow text-gray-500">
+              Search
+            </button>
           </div>
         </div>
       )}

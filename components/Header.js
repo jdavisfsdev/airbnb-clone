@@ -28,6 +28,10 @@ function Header() {
     setEndDate(ranges.selection.endDate);
   };
 
+  const resetInput = () => {
+    setSearchInput('');
+  };
+
   return (
     <header className="sticky top-0 z-50 grid grid-cols-3 bg-white shadow-md p-5 md:px-10">
       <div className="relative flex items-center h-10 cursor-pointer my-auto">
@@ -74,9 +78,19 @@ function Header() {
             <UsersIcon className="h-5" />
             <input
               type="number"
+              value={numOfGuests}
+              onChange={(e) => setNumOfGuests(e.target.value)}
+              min={1}
               className="w-12 pl-2 text-lg outline-none text-red-400"
               placeholder="1"
             />
+          </div>
+          <div className="flex">
+            <button className="flex-grow text-red-400" onClick={resetInput}>
+              Cancel
+            </button>
+
+            <button className="flex-grow text-gray-500">Search</button>
           </div>
         </div>
       )}

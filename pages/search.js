@@ -2,6 +2,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { useRouter } from 'next/dist/client/router';
 import { format } from 'date-fns';
+import InfoCard from '../components/InfoCard';
 
 function Search({ searchResults }) {
   // useRouter includes a router.query selector
@@ -32,9 +33,19 @@ function Search({ searchResults }) {
             <p className="button">Rooms and Beds</p>
             <p className="button">More Filters</p>
           </div>
-        </section>
 
-        {searchResults}
+          <div className="flex flex-col">
+            {searchResults?.map(({ location, title, description, img }) => (
+              <InfoCard
+                key={img}
+                img={img}
+                location={location}
+                title={title}
+                description={description}
+              />
+            ))}
+          </div>
+        </section>
       </main>
 
       <Footer />

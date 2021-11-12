@@ -3,7 +3,7 @@ import Footer from '../components/Footer';
 import { useRouter } from 'next/dist/client/router';
 import { format } from 'date-fns';
 
-function Search() {
+function Search({ searchResults }) {
   // useRouter includes a router.query selector
   const router = useRouter();
   //   ]destructuring the URL queries, no need to type router.query.location etc.
@@ -33,6 +33,8 @@ function Search() {
             <p className="button">More Filters</p>
           </div>
         </section>
+
+        {searchResults}
       </main>
 
       <Footer />
@@ -41,4 +43,15 @@ function Search() {
 }
 
 export default Search;
-<h1>I am the search page</h1>;
+
+export async function getServerSideProps() {
+  const searchResults = await fetch('https://links.papareact.com/isz').then(
+    (res) => res.json()
+  );
+
+  return {
+    props: {
+      searchResults,
+    },
+  };
+}

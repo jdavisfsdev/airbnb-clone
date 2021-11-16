@@ -35,15 +35,20 @@ function Search({ searchResults }) {
           </div>
 
           <div className="flex flex-col">
-            {searchResults?.map(({ location, title, description, img }) => (
-              <InfoCard
-                key={img}
-                img={img}
-                location={location}
-                title={title}
-                description={description}
-              />
-            ))}
+            {searchResults?.map(
+              ({ location, title, description, img, star, price, total }) => (
+                <InfoCard
+                  key={img}
+                  img={img}
+                  location={location}
+                  title={title}
+                  description={description}
+                  star={star}
+                  price={price}
+                  total={total}
+                />
+              )
+            )}
           </div>
         </section>
       </main>
